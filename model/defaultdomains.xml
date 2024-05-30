@@ -2,8 +2,8 @@
 <DomainFile class="oracle.dbtools.crest.model.design.DomainFileWrapper" fileName="defaultdomains">
 <domains>
 <Domain class="oracle.dbtools.crest.model.design.Domain" name="Unknown" id="DOM3000004">
-<createdBy>Fasilkom 1</createdBy>
-<createdTime>2022-01-11 04:03:17 UTC</createdTime>
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 09:31:19 UTC</createdTime>
 <ownerDesignName>System</ownerDesignName>
 <avTSortOrder>0</avTSortOrder>
 <fileName>defaultdomains</fileName>

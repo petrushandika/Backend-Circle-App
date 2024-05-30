@@ -1,0 +1,121 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E2CAA2E3-C6E7-8DC8-E5B1-98BDCC0DD982" name="likes">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:55:04 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="11504408-5043-3DD9-77CF-F475133C07DC">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:55:13 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="userId" id="EA050B8E-D695-1F9C-F260-C0045C372BF8">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:55:47 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="threadId" id="2F47FD3A-AB20-0CF4-326C-343439C44B8E">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:56:08 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="createdAt" id="047D0BDA-CAAF-12C6-F55D-7A1C07973A01">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:56:23 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="updatedAt" id="18C808EE-82CA-2FCF-3AC7-87E850F04EC8">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:56:40 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="C6648C66-D507-33B5-2E6D-99DDD6FA4E55">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 09:10:11 UTC</createdTime>
+<generatorID>5514467F-FF95-FA9D-A347-6B503E910485</generatorID>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<referedAttribute>7356C4BB-4889-5B24-4F98-CB8A7196B3C8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id2" id="4622DF89-8DD7-5009-2A46-ECEC2D304582">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 09:11:28 UTC</createdTime>
+<generatorID>4E4B7853-1E11-B0FE-07DF-B149080DD3CA</generatorID>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<referedAttribute>E42C24F8-A0C2-6A20-F759-38007631A107</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4620F996-BADC-327C-FCE4-DD3CA798A3F0" name="like PK">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-30 08:55:16 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>11504408-5043-3DD9-77CF-F475133C07DC</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
