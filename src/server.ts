@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
+import ThreadController from "./controllers/ThreadController";
+import ThreadService from "./services/ThreadService";
 
 const app = express();
 const port = 3000;
@@ -24,32 +26,15 @@ type ThreadDTO = {
 
 // Get a single thread by ID
 router.get("/threads/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  try {
-    const thread = await prisma.thread.findFirst({
-      where: { id: Number(id) },
-    });
-
-    if (!thread) {
-      res.status(404).send("Thread not found");
-      return;
-    }
-
-    res.json(thread);
-  } catch (error) {
-    res.status(500).send("Error retrieving thread");
-  }
+  const threadService = new ThreadService();
+  const threadController = new ThreadController(threadService);
+  await threadController.findOne(req, res);
 });
 
 // Get all threads
 router.get("/threads", async (req: Request, res: Response) => {
-  try {
-    const threads = await prisma.thread.findMany();
-    res.json(threads);
-  } catch (error) {
-    res.status(500).send("Error retrieving threads");
-  }
+  const threadController = new ThreadController(new ThreadService());
+  await threadController.find(req, res);
 });
 
 // Create a new thread
@@ -77,7 +62,6 @@ router.patch("/threads/:id", async (req: Request, res: Response) => {
   const dto = req.body as ThreadDTO;
 
   try {
-    // Cari thread yang akan diperbarui
     let thread = await prisma.thread.findFirst({
       where: { id: Number(id) },
     });
@@ -87,7 +71,6 @@ router.patch("/threads/:id", async (req: Request, res: Response) => {
       return;
     }
 
-    // Perbarui properti thread sesuai dengan data baru
     if (dto.content) {
       thread.content = dto.content;
     }
@@ -100,7 +83,6 @@ router.patch("/threads/:id", async (req: Request, res: Response) => {
       thread.userId = dto.userId;
     }
 
-    // Simpan perubahan ke database
     const updatedThread = await prisma.thread.update({
       where: { id: Number(id) },
       data: { ...thread },
