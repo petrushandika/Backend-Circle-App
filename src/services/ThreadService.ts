@@ -24,7 +24,12 @@ class ThreadService {
   async create(dto: ThreadDTO) {
     try {
       // Validate input DTO
-      ThreadSchema.validate(dto);
+      const validate = ThreadSchema.validate(dto);
+
+      if (validate.error) {
+        return validate.error.details;
+        // throw new Error(validate.error.details[0].message);
+      }
 
       return await this.prisma.thread.create({ data: dto });
     } catch (error) {
