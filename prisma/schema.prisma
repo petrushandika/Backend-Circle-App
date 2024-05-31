@@ -33,6 +33,7 @@ model user {
 
 model thread {
   id           Int      @id @default(autoincrement())
+  image        String?
   content      String
   totalReplies Int      @default(0)
   userId       Int

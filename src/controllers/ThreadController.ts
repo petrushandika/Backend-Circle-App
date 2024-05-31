@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import ThreadService from "../services/ThreadService";
+import { ThreadDTO } from "../types/ThreadDTO";
 
 class ThreadController {
-  private readonly threadService: ThreadService;
-
-  constructor(threadService: ThreadService) {
-    this.threadService = threadService;
-  }
+  constructor(private readonly threadService: ThreadService) {}
 
   async find(req: Request, res: Response) {
     try {
@@ -30,6 +27,51 @@ class ThreadController {
       res.json(thread);
     } catch (error) {
       console.error("Error retrieving thread:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+
+  async create(req: Request, res: Response) {
+    const dto = req.body as ThreadDTO;
+
+    try {
+      const thread = await this.threadService.create(dto);
+      res.status(201).json(thread);
+    } catch (error) {
+      console.error("Error creating thread:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const dto = req.body as ThreadDTO;
+
+    try {
+      const updatedThread = await this.threadService.update(Number(id), dto);
+      if (!updatedThread) {
+        res.status(404).send("Thread not found");
+        return;
+      }
+      res.status(200).json(updatedThread);
+    } catch (error) {
+      console.error("Error updating thread:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const deletedThread = await this.threadService.delete(Number(id));
+      if (!deletedThread) {
+        res.status(404).send("Thread not found");
+        return;
+      }
+      res.status(200).json(deletedThread);
+    } catch (error) {
+      console.error("Error deleting thread:", error);
       res.status(500).send("Internal Server Error");
     }
   }

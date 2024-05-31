@@ -1,5 +1,5 @@
-// Type DTO
-type ThreadDTO = {
+export type ThreadDTO = {
+  image?: string;
   content: string;
   totalReplies?: number;
   userId: number;

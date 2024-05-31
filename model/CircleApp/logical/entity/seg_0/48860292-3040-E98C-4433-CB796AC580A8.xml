@@ -24,7 +24,18 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="image" id="24ACBA56-15B7-560D-57C9-A894DA2E1896">
+<createdBy>petru</createdBy>
+<createdTime>2024-05-31 06:23:05 UTC</createdTime>
+<ownerDesignName>CircleApp</ownerDesignName>
+<engineerTo>
+<item key="91466157-2146-F06A-2642-A441F8146ED5" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="content" id="F15E49D8-56E2-3C18-4F70-220134E23AE0">
@@ -36,9 +47,7 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>255</dataTypeSize>
-<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="totalReply" id="04B437B2-8C75-491C-EA62-03D9E09A6187">
 <createdBy>petru</createdBy>
@@ -49,7 +58,6 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="createdAt" id="EEAC2E13-7104-FDD7-162D-616E39B4CBC8">
@@ -61,7 +69,6 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="updatedAt" id="C4757E0D-6BC6-AD8C-5A3E-F7ECC03B0919">
@@ -73,7 +80,6 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
