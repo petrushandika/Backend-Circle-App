@@ -53,7 +53,13 @@ class ThreadService {
 
   async delete(id: number) {
     try {
-      return await this.prisma.thread.delete({ where: { id } });
+      await this.prisma.$transaction([
+        this.prisma.thread.delete({ where: { id } }),
+        this.prisma.like.deleteMany({ where: { threadId: id } }),
+        this.prisma.reply.deleteMany({ where: { threadId: id } }),
+      ]);
+
+      return;
     } catch (error) {
       throw new Error("Error deleting thread");
     }
