@@ -9,7 +9,7 @@ class ThreadService {
     try {
       return await this.prisma.thread.findMany();
     } catch (error) {
-      throw new Error("Error retrieving threads");
+      this.handleError("Error retrieving threads", error);
     }
   }
 
@@ -17,37 +17,50 @@ class ThreadService {
     try {
       return await this.prisma.thread.findFirst({ where: { id } });
     } catch (error) {
-      throw new Error("Error retrieving thread");
+      this.handleError("Error retrieving thread", error);
     }
   }
 
   async create(dto: ThreadDTO) {
     try {
       // Validate input DTO
-      const validate = ThreadSchema.validate(dto);
+      await ThreadSchema.validateAsync(dto);
 
-      if (validate.error) {
-        return validate.error.details;
-        // throw new Error(validate.error.details[0].message);
-      }
+      // Ensure the correct data types for Prisma
+      const threadData = {
+        ...dto,
+        totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
+        totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
+        userId: Number(dto.userId),
+      };
 
-      return await this.prisma.thread.create({ data: dto });
+      console.log("Creating thread with data:", threadData);
+      return await this.prisma.thread.create({ data: threadData });
     } catch (error) {
-      throw new Error("Error creating thread");
+      this.handleError("Error creating thread", error);
     }
   }
 
   async update(id: number, dto: ThreadDTO) {
     try {
       // Validate input DTO
-      ThreadSchema.validate(dto);
+      await ThreadSchema.validateAsync(dto);
 
+      // Ensure the correct data types for Prisma
+      const threadData = {
+        ...dto,
+        totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
+        totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
+        userId: Number(dto.userId),
+      };
+
+      console.log("Updating thread with id:", id, "and data:", threadData);
       return await this.prisma.thread.update({
         where: { id },
-        data: dto,
+        data: threadData,
       });
     } catch (error) {
-      throw new Error("Error updating thread");
+      this.handleError("Error updating thread", error);
     }
   }
 
@@ -58,10 +71,18 @@ class ThreadService {
         this.prisma.like.deleteMany({ where: { threadId: id } }),
         this.prisma.reply.deleteMany({ where: { threadId: id } }),
       ]);
-
-      return;
+      console.log("Thread deleted with id:", id);
     } catch (error) {
-      throw new Error("Error deleting thread");
+      this.handleError("Error deleting thread", error);
+    }
+  }
+
+  private handleError(message: string, error: unknown): never {
+    console.error(message, error);
+    if (error instanceof Error) {
+      throw new Error(`${message}: ${error.message}`);
+    } else {
+      throw new Error(message);
     }
   }
 }

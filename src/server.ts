@@ -12,6 +12,9 @@ import LikeService from "./services/LikeService";
 import LikeController from "./controllers/LikeController";
 import ReplyService from "./services/ReplyService";
 import ReplyController from "./controllers/ReplyController";
+import dotenv from "dotenv";
+import upload from "./middlewares/UploadThread";
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -38,6 +41,7 @@ const replyController = new ReplyController(replyService);
 app.use(cors());
 app.use(express.json());
 app.use("/api/v", router);
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send("Hello, welcome to circle!");
@@ -60,7 +64,9 @@ router.delete("/users/:id", (req, res) => userController.delete(req, res));
 // Threads routes
 router.get("/threads", (req, res) => threadController.find(req, res));
 router.get("/threads/:id", (req, res) => threadController.findOne(req, res));
-router.post("/threads", (req, res) => threadController.create(req, res));
+router.post("/threads", upload.single("image"), (req, res) =>
+  threadController.create(req, res)
+);
 router.patch("/threads/:id", (req, res) => threadController.update(req, res));
 router.delete("/threads/:id", (req, res) => threadController.delete(req, res));
 

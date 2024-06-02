@@ -22,9 +22,9 @@ class UserController {
       const user = await this.userService.findOne(Number(id));
       if (!user) {
         res.status(404).send("User not found");
-        return;
+      } else {
+        res.json(user);
       }
-      res.json(user);
     } catch (error) {
       console.error("Error retrieving user:", error);
       res.status(500).send("Internal Server Error");
@@ -51,9 +51,9 @@ class UserController {
       const updatedUser = await this.userService.update(Number(id), dto);
       if (!updatedUser) {
         res.status(404).send("User not found");
-        return;
+      } else {
+        res.status(200).json(updatedUser);
       }
-      res.status(200).json(updatedUser);
     } catch (error) {
       console.error("Error updating user:", error);
       res.status(500).send("Internal Server Error");
@@ -64,12 +64,8 @@ class UserController {
     const { id } = req.params;
 
     try {
-      const deletedUser = await this.userService.delete(Number(id));
-      if (!deletedUser) {
-        res.status(404).send("User not found");
-        return;
-      }
-      res.status(200).json(deletedUser);
+      await this.userService.delete(Number(id));
+      res.status(200).send("User deleted successfully");
     } catch (error) {
       console.error("Error deleting user:", error);
       res.status(500).send("Internal Server Error");

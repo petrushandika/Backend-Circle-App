@@ -9,8 +9,8 @@ class LoginController {
     const dto = req.body as LoginDTO;
 
     try {
-      const result = await this.loginService.login(dto);
-      res.status(200).json(result);
+      const user = await this.loginService.login(dto);
+      res.status(200).json(user);
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).send("Internal Server Error");

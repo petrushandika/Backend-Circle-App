@@ -34,12 +34,17 @@ class ThreadController {
   async create(req: Request, res: Response) {
     const dto = req.body as ThreadDTO;
 
+    console.log("Request file:", req.file);
+    if (req.file) {
+      dto.image = req.file.path;
+    }
+
     try {
       const thread = await this.threadService.create(dto);
       res.status(201).json(thread);
     } catch (error) {
       console.error("Error creating thread:", error);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
     }
   }
 
@@ -48,15 +53,16 @@ class ThreadController {
     const dto = req.body as ThreadDTO;
 
     try {
-      const updatedThread = await this.threadService.update(Number(id), dto);
+      await this.threadService.update(Number(id), dto);
+      const updatedThread = await this.threadService.findOne(Number(id));
       if (!updatedThread) {
-        res.status(404).send("Thread not found");
+        res.status(404).send("Thread not found after update");
         return;
       }
       res.status(200).json(updatedThread);
     } catch (error) {
       console.error("Error updating thread:", error);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
     }
   }
 
@@ -64,15 +70,11 @@ class ThreadController {
     const { id } = req.params;
 
     try {
-      const deletedThread = await this.threadService.delete(Number(id));
-      if (!deletedThread) {
-        res.status(404).send("Thread not found");
-        return;
-      }
-      res.status(200).json(deletedThread);
+      await this.threadService.delete(Number(id));
+      res.status(200).send("Thread deleted successfully");
     } catch (error) {
       console.error("Error deleting thread:", error);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
     }
   }
 }

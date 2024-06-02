@@ -9,8 +9,8 @@ class RegisterController {
     const dto = req.body as RegisterDTO;
 
     try {
-      const result = await this.registerService.register(dto);
-      res.status(201).json(result);
+      const user = await this.registerService.register(dto);
+      res.status(201).json(user);
     } catch (error) {
       console.error("Error registering:", error);
       res.status(500).send("Internal Server Error");
