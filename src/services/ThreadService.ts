@@ -1,9 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import { ThreadDTO } from "../types/ThreadDTO";
 import { ThreadSchema } from "../validators/ThreadValidator";
+import { v2 as cloudinary } from "cloudinary";
 
 class ThreadService {
   private readonly prisma = new PrismaClient();
+
+  constructor() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+  }
 
   async find() {
     try {
@@ -23,12 +32,19 @@ class ThreadService {
 
   async create(dto: ThreadDTO) {
     try {
-      // Validate input DTO
       await ThreadSchema.validateAsync(dto);
 
-      // Ensure the correct data types for Prisma
+      let imageUrl = null;
+      if (dto.image) {
+        const uploadResult = await cloudinary.uploader.upload(dto.image, {
+          upload_preset: "CircleApp"
+        });
+        imageUrl = uploadResult.secure_url;
+      }
+
       const threadData = {
         ...dto,
+        image: imageUrl,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
         totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
         userId: Number(dto.userId),
@@ -43,10 +59,8 @@ class ThreadService {
 
   async update(id: number, dto: ThreadDTO) {
     try {
-      // Validate input DTO
       await ThreadSchema.validateAsync(dto);
 
-      // Ensure the correct data types for Prisma
       const threadData = {
         ...dto,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,

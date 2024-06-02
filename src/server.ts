@@ -13,7 +13,8 @@ import LikeController from "./controllers/LikeController";
 import ReplyService from "./services/ReplyService";
 import ReplyController from "./controllers/ReplyController";
 import dotenv from "dotenv";
-import upload from "./middlewares/UploadThread";
+import upload from "./middlewares/UploadFile";
+import { authenticate } from "./middlewares/Authenticate";
 dotenv.config();
 
 const app = express();
@@ -58,17 +59,31 @@ router.post("/auth/register", (req, res) =>
 // Users routes
 router.get("/users", (req, res) => userController.find(req, res));
 router.get("/users/:id", (req, res) => userController.findOne(req, res));
+router.get("/users/:id/followers", (req, res) =>
+  userController.getFollowers(req, res)
+);
+router.get("/users/:id/following", (req, res) =>
+  userController.getFollowing(req, res)
+);
 router.patch("/users/:id", (req, res) => userController.update(req, res));
 router.delete("/users/:id", (req, res) => userController.delete(req, res));
 
 // Threads routes
-router.get("/threads", (req, res) => threadController.find(req, res));
-router.get("/threads/:id", (req, res) => threadController.findOne(req, res));
-router.post("/threads", upload.single("image"), (req, res) =>
+router.get("/threads", authenticate, (req, res) =>
+  threadController.find(req, res)
+);
+router.get("/threads/:id", authenticate, (req, res) =>
+  threadController.findOne(req, res)
+);
+router.post("/threads", authenticate, upload.single("image"), (req, res) =>
   threadController.create(req, res)
 );
-router.patch("/threads/:id", (req, res) => threadController.update(req, res));
-router.delete("/threads/:id", (req, res) => threadController.delete(req, res));
+router.patch("/threads/:id", authenticate, upload.single("image"), (req, res) =>
+  threadController.update(req, res)
+);
+router.delete("/threads/:id", authenticate, (req, res) =>
+  threadController.delete(req, res)
+);
 
 // Like routes
 router.get("/likes", (req, res) => likeController.find(req, res));

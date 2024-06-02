@@ -36,7 +36,7 @@ class ThreadController {
 
     console.log("Request file:", req.file);
     if (req.file) {
-      dto.image = req.file.path;
+      dto.image = req.file ? req.file.path : "";
     }
 
     try {
@@ -44,7 +44,13 @@ class ThreadController {
       res.status(201).json(thread);
     } catch (error) {
       console.error("Error creating thread:", error);
-      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
+      res
+        .status(500)
+        .send(
+          `Internal Server Error: ${
+            error instanceof Error ? error.message : ""
+          }`
+        );
     }
   }
 
@@ -62,7 +68,13 @@ class ThreadController {
       res.status(200).json(updatedThread);
     } catch (error) {
       console.error("Error updating thread:", error);
-      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
+      res
+        .status(500)
+        .send(
+          `Internal Server Error: ${
+            error instanceof Error ? error.message : ""
+          }`
+        );
     }
   }
 
@@ -74,7 +86,13 @@ class ThreadController {
       res.status(200).send("Thread deleted successfully");
     } catch (error) {
       console.error("Error deleting thread:", error);
-      res.status(500).send(`Internal Server Error: ${error instanceof Error ? error.message : ''}`);
+      res
+        .status(500)
+        .send(
+          `Internal Server Error: ${
+            error instanceof Error ? error.message : ""
+          }`
+        );
     }
   }
 }

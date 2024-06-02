@@ -23,12 +23,10 @@ class UserService {
 
   async create(dto: UserDTO) {
     try {
-      // Validate input DTO
       const validate = UserSchema.validate(dto);
 
       if (validate.error) {
         return validate.error.details;
-        // throw new Error(validate.error.details[0].message);
       }
 
       return await this.prisma.user.create({ data: dto });
@@ -39,7 +37,6 @@ class UserService {
 
   async update(id: number, dto: UserDTO) {
     try {
-      // Validate input DTO
       UserSchema.validate(dto);
 
       return await this.prisma.user.update({
@@ -61,6 +58,30 @@ class UserService {
       return;
     } catch (error) {
       throw new Error("Error deleting user");
+    }
+  }
+
+  async getFollowers(userId: number) {
+    try {
+      const followers = await this.prisma.follow.findMany({
+        where: { followingId: userId },
+        include: { follower: true },
+      });
+      return followers.map((follow) => follow.follower);
+    } catch (error) {
+      throw new Error("Error retrieving followers");
+    }
+  }
+
+  async getFollowing(userId: number) {
+    try {
+      const following = await this.prisma.follow.findMany({
+        where: { followersId: userId },
+        include: { following: true },
+      });
+      return following.map((follow) => follow.following);
+    } catch (error) {
+      throw new Error("Error retrieving following");
     }
   }
 }
