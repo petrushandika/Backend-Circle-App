@@ -71,30 +71,6 @@ class UserController {
       res.status(500).send("Internal Server Error");
     }
   }
-
-  async getFollowers(req: Request, res: Response) {
-    const { id } = req.params;
-
-    try {
-      const followers = await this.userService.getFollowers(Number(id));
-      res.json(followers);
-    } catch (error) {
-      console.error("Error retrieving followers:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
-
-  async getFollowing(req: Request, res: Response) {
-    const { id } = req.params;
-
-    try {
-      const following = await this.userService.getFollowing(Number(id));
-      res.json(following);
-    } catch (error) {
-      console.error("Error retrieving following:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  }
 }
 
 export default UserController;

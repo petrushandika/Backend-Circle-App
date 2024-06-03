@@ -12,6 +12,8 @@ import LikeService from "./services/LikeService";
 import LikeController from "./controllers/LikeController";
 import ReplyService from "./services/ReplyService";
 import ReplyController from "./controllers/ReplyController";
+import FollowService from "./services/FollowService";
+import FollowController from "./controllers/FollowController";
 import dotenv from "dotenv";
 import upload from "./middlewares/UploadFile";
 import { authenticate } from "./middlewares/Authenticate";
@@ -39,6 +41,9 @@ const likeController = new LikeController(likeService);
 const replyService = new ReplyService();
 const replyController = new ReplyController(replyService);
 
+const followService = new FollowService();
+const followController = new FollowController(followService);
+
 app.use(cors());
 app.use(express.json());
 app.use("/api/v", router);
@@ -59,12 +64,6 @@ router.post("/auth/register", (req, res) =>
 // Users routes
 router.get("/users", (req, res) => userController.find(req, res));
 router.get("/users/:id", (req, res) => userController.findOne(req, res));
-router.get("/users/:id/followers", (req, res) =>
-  userController.getFollowers(req, res)
-);
-router.get("/users/:id/following", (req, res) =>
-  userController.getFollowing(req, res)
-);
 router.patch("/users/:id", (req, res) => userController.update(req, res));
 router.delete("/users/:id", (req, res) => userController.delete(req, res));
 
@@ -97,6 +96,20 @@ router.get("/replies/:id", (req, res) => replyController.findOne(req, res));
 router.post("/replies", (req, res) => replyController.create(req, res));
 router.patch("/replies/:id", (req, res) => replyController.update(req, res));
 router.delete("/replies/:id", (req, res) => replyController.delete(req, res));
+
+// Follow routes
+router.get("/followers/:id", (req, res) =>
+  followController.getFollowers(req, res)
+);
+router.get("/following/:id", (req, res) =>
+  followController.getFollowing(req, res)
+);
+router.post("/add-follower", (req, res) =>
+  followController.addFollower(req, res)
+);
+router.delete("/delete-follower", (req, res) =>
+  followController.deleteFollower(req, res)
+);
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
