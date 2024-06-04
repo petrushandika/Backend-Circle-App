@@ -1,5 +1,3 @@
-Sure, here's the detailed README for the backend setup without TypeORM and focusing on Prisma:
-
 # Backend Circle App
 
 ## Table of Contents
