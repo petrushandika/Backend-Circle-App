@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import CheckController from "./controllers/CheckController";
 import RegisterService from "./services/RegisterService";
 import RegisterController from "./controllers/RegisterController";
 import LoginService from "./services/LoginService";
@@ -22,6 +23,8 @@ dotenv.config();
 const app = express();
 const port = 3000;
 const router = express.Router();
+
+const checkController = new CheckController();
 
 const registerService = new RegisterService();
 const registerController = new RegisterController(registerService);
@@ -52,6 +55,9 @@ app.use("/uploads", express.static("uploads"));
 app.get("/", (req, res) => {
   res.send("Hello, welcome to circle!");
 });
+
+// Check routes
+router.post("/auth/check", authenticate, (req, res) => checkController.check(req, res));
 
 // Login routes
 router.post("/auth/login", (req, res) => loginController.login(req, res));
