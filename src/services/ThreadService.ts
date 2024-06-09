@@ -10,13 +10,23 @@ class ThreadService {
     cloudinary.config({
       cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
       api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET
+      api_secret: process.env.CLOUDINARY_API_SECRET,
     });
   }
 
   async find() {
     try {
-      return await this.prisma.thread.findMany();
+      return await this.prisma.thread.findMany({
+        include: {
+          user: {
+            select: {
+              fullName: true,
+              username: true,
+              avatar: true,
+            },
+          },
+        },
+      });
     } catch (error) {
       this.handleError("Error retrieving threads", error);
     }
@@ -24,7 +34,18 @@ class ThreadService {
 
   async findOne(id: number) {
     try {
-      return await this.prisma.thread.findFirst({ where: { id } });
+      return await this.prisma.thread.findFirst({
+        where: { id },
+        include: {
+          user: {
+            select: {
+              fullName: true,
+              username: true,
+              avatar: true,
+            },
+          },
+        },
+      });
     } catch (error) {
       this.handleError("Error retrieving thread", error);
     }
@@ -32,12 +53,14 @@ class ThreadService {
 
   async create(dto: ThreadDTO) {
     try {
+      console.log("DTO before validation:", dto); 
       await ThreadSchema.validateAsync(dto);
+      console.log("DTO after validation:", dto);
 
       let imageUrl = null;
       if (dto.image) {
         const uploadResult = await cloudinary.uploader.upload(dto.image, {
-          upload_preset: "CircleApp"
+          upload_preset: "CircleApp",
         });
         imageUrl = uploadResult.secure_url;
       }
@@ -47,7 +70,6 @@ class ThreadService {
         image: imageUrl,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
         totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
-        userId: Number(dto.userId),
       };
 
       console.log("Creating thread with data:", threadData);
@@ -65,7 +87,6 @@ class ThreadService {
         ...dto,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
         totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
-        userId: Number(dto.userId),
       };
 
       console.log("Updating thread with id:", id, "and data:", threadData);
