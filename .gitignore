@@ -3,3 +3,4 @@ node_modules
 **/*.local
 **/*.git
 **/*.DS_Store
+.env

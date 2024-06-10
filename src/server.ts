@@ -57,7 +57,9 @@ app.get("/", (req, res) => {
 });
 
 // Check routes
-router.post("/auth/check", authenticate, (req, res) => checkController.check(req, res));
+router.post("/auth/check", authenticate, (req, res) =>
+  checkController.check(req, res)
+);
 
 // Login routes
 router.post("/auth/login", (req, res) => loginController.login(req, res));
@@ -68,10 +70,16 @@ router.post("/auth/register", (req, res) =>
 );
 
 // Users routes
-router.get("/users", (req, res) => userController.find(req, res));
-router.get("/users/:id", (req, res) => userController.findOne(req, res));
-router.patch("/users/:id", (req, res) => userController.update(req, res));
-router.delete("/users/:id", (req, res) => userController.delete(req, res));
+router.get("/users", authenticate, (req, res) => userController.find(req, res));
+router.get("/users/:id", authenticate, (req, res) =>
+  userController.findOne(req, res)
+);
+router.patch("/users/:id", authenticate, (req, res) =>
+  userController.update(req, res)
+);
+router.delete("/users/:id", authenticate, (req, res) =>
+  userController.delete(req, res)
+);
 
 // Threads routes
 router.get("/threads", authenticate, (req, res) =>

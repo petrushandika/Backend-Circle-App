@@ -32,9 +32,6 @@ class ThreadController {
   }
 
   async create(req: Request, res: Response) {
-    console.log("Request body:", req.body);
-    console.log("Request file:", req.file); 
-    
     const dto: ThreadDTO = {
       content: req.body.content,
       userId: res.locals.user ? res.locals.user.id : null,
