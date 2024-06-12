@@ -1,7 +1,23 @@
-node_modules
-**/*.localz
-**/*.local
-**/*.git
-**/*.DS_Store
+# Ignore node_modules directory
+node_modules/
+
+# Ignore .env file
 .env
-uploads
+
+# Ignore files with .localz extension
+**/*.localz
+
+# Ignore files with .local extension
+**/*.local
+
+# Ignore .git directory
+**/*.git
+
+# Ignore .DS_Store files
+**/*.DS_Store
+
+# Ignore uploads directory
+uploads/
+
+# Ignore dist directory
+dist/
