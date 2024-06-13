@@ -13,12 +13,8 @@ app.use(express.json());
 app.use("/api/v", router);
 app.use("/uploads", express.static("uploads"));
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("Hello, welcome to circle!");
-});
-
-router.get("/", (req, res) => {
-  res.send("Welcome to version One!");
 });
 
 app.listen(port, () => {
