@@ -32,6 +32,18 @@ class ThreadController {
   }
 
   async create(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              $ref: '#/components/schemas/CreateThreadDTO'
+            }
+          }
+        }
+      } 
+    */
     const dto: ThreadDTO = {
       content: req.body.content,
       userId: res.locals.user ? res.locals.user.id : null,
@@ -57,6 +69,18 @@ class ThreadController {
   }
 
   async update(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              $ref: '#/components/schemas/UpdateThreadDTO'
+            }
+          }
+        }
+      } 
+    */
     const { id } = req.params;
     const dto = req.body as ThreadDTO;
 
