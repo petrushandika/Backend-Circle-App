@@ -19,7 +19,7 @@ class UserController {
   async findOne(req: Request, res: Response) {
     const userId = res.locals.user.id;
     try {
-      const user = await this.userService.findOne(userId);
+      const user = await this.userService.findOne(Number(userId));
       if (!user) {
         res.status(404).json({ error: "User not found" });
       } else {
@@ -32,6 +32,18 @@ class UserController {
   }
 
   async create(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              $ref: '#/components/schemas/CreateUserDTO'
+            }
+          }
+        }
+      } 
+    */
     const dto = req.body as UserDTO;
     try {
       const user = await this.userService.create(dto);
@@ -43,6 +55,18 @@ class UserController {
   }
 
   async update(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              $ref: '#/components/schemas/UpdateUserDTO'
+            }
+          }
+        }
+      } 
+    */
     const { id } = req.params;
     const dto = req.body as UserDTO;
     try {
