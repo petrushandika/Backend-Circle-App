@@ -10,9 +10,8 @@ import FollowRoutes from "./routes/FollowRoutes";
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  console.log(`Request URL: ${req.url}`);
-  next();
+router.get("/", (req, res) => {
+  res.send("Welcome to version One!");
 });
 
 router.use(CheckRoutes);
@@ -23,10 +22,5 @@ router.use(ThreadRoutes);
 router.use(LikeRoutes);
 router.use(RepliesRoutes);
 router.use(FollowRoutes);
-
-router.get("/", (req, res) => {
-  console.log("GET /api/v");
-  res.send("Welcome to version One!");
-});
 
 export default router;

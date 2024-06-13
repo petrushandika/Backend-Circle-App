@@ -13,6 +13,9 @@ const LikeRoutes_1 = __importDefault(require("./routes/LikeRoutes"));
 const RepliesRoutes_1 = __importDefault(require("./routes/RepliesRoutes"));
 const FollowRoutes_1 = __importDefault(require("./routes/FollowRoutes"));
 const router = express_1.default.Router();
+router.get("/", (req, res) => {
+    res.send("Welcome to version One!");
+});
 router.use(CheckRoutes_1.default);
 router.use(RegisterRoutes_1.default);
 router.use(LoginRoutes_1.default);
