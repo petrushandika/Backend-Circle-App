@@ -16,7 +16,7 @@ const doc = {
     title: "Circle App",
     description: "API Docs",
   },
-  host: "localhost:3000",
+  host: process.env.RAILWAY_API,
   components: {
     "@schemas": {
       ...RegisterSwagger,
