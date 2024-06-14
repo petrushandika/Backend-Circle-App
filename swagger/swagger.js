@@ -11,14 +11,25 @@ const LikeSwagger = require("./LikeSwagger");
 const ReplySwagger = require("./ReplySwagger");
 const FollowSwagger = require("./FollowSwagger");
 
+require("dotenv").config();
+
 const doc = {
   info: {
     title: "Circle App",
     description: "API Docs",
   },
-  host: process.env.RAILWAY_API,
+  servers: [
+    {
+      url: process.env.RAILWAY_API,
+      description: "Production server",
+    },
+    {
+      url: "http://localhost:3000",
+      description: "Local server",
+    },
+  ],
   components: {
-    "@schemas": {
+    schemas: {
       ...RegisterSwagger,
       ...LoginSwagger,
       ...UserSwagger,
