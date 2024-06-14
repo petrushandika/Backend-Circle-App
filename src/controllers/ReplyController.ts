@@ -36,7 +36,7 @@ class ReplyController {
       #swagger.requestBody = {
         required: true,
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               $ref: '#/components/schemas/ReplyDTO'
             }
@@ -60,7 +60,7 @@ class ReplyController {
       #swagger.requestBody = {
         required: true,
         content: {
-          "application/json": {
+          "multipart/form-data": {
             schema: {
               $ref: '#/components/schemas/ReplyDTO'
             }

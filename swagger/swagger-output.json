@@ -418,6 +418,16 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LikeDTO"
+              }
+            }
+          }
         }
       }
     },
@@ -492,6 +502,16 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyDTO"
+              }
+            }
+          }
         }
       }
     },
@@ -541,6 +561,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyDTO"
+              }
+            }
           }
         }
       },
@@ -952,6 +982,89 @@
         },
         "required": [
           "id"
+        ]
+      },
+      "LikeDTO": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer"
+          },
+          "threadId": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "userId",
+          "threadId"
+        ]
+      },
+      "ReplyDTO": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer"
+          },
+          "threadId": {
+            "type": "integer"
+          },
+          "image": {
+            "type": "file"
+          },
+          "content": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "userId",
+          "threadId",
+          "content"
+        ]
+      },
+      "FollowDTO": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "userId",
+          "threadId",
+          "content"
         ]
       }
     }
