@@ -58,6 +58,7 @@ class ThreadController {
     }
 
     try {
+      await redisClient.del("THREADS_DATA");
       const thread = await this.threadService.create(dto);
       res.status(201).json(thread);
     } catch (error) {
