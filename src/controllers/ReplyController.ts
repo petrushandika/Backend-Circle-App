@@ -32,6 +32,18 @@ class ReplyController {
   }
 
   async create(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: '#/components/schemas/ReplyDTO'
+            }
+          }
+        }
+      } 
+    */
     const dto = req.body as ReplyDTO;
 
     try {
@@ -44,12 +56,24 @@ class ReplyController {
   }
 
   async update(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: '#/components/schemas/ReplyDTO'
+            }
+          }
+        }
+      } 
+    */
     const { id } = req.params;
     const dto = req.body as ReplyDTO;
 
     try {
       const updatedReply = await this.replyService.update(Number(id), dto);
-      if (!updatedReply) {  
+      if (!updatedReply) {
         res.status(404).send("Reply not found");
         return;
       }
