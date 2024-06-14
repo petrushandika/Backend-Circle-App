@@ -6,6 +6,18 @@ class RegisterController {
   constructor(private readonly registerService: RegisterService) {}
 
   async register(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "multipart/form-data": {
+            schema: {
+              $ref: '#/components/schemas/RegisterDTO'
+            }
+          }
+        }
+      } 
+    */
     const dto = req.body as RegisterDTO;
 
     try {

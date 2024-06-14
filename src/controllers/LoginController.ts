@@ -6,6 +6,18 @@ class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
   async login(req: Request, res: Response) {
+    /* 
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: '#/components/schemas/LoginDTO'
+            }
+          }
+        }
+      } 
+    */
     const dto = req.body as LoginDTO;
 
     try {

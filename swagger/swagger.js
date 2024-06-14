@@ -3,6 +3,8 @@ const swaggerAutogen = require("swagger-autogen")({
   autoHeaders: false,
 });
 
+const RegisterSwagger = require("./RegisterSwagger");
+const LoginSwagger = require("./LoginSwagger");
 const UserSwagger = require("./UserSwagger");
 const ThreadSwagger = require("./ThreadSwagger");
 
@@ -14,6 +16,8 @@ const doc = {
   host: "localhost:3000",
   components: {
     "@schemas": {
+      ...RegisterSwagger,
+      ...LoginSwagger,
       ...UserSwagger,
       ...ThreadSwagger,
     },
