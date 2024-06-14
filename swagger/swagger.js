@@ -7,6 +7,9 @@ const RegisterSwagger = require("./RegisterSwagger");
 const LoginSwagger = require("./LoginSwagger");
 const UserSwagger = require("./UserSwagger");
 const ThreadSwagger = require("./ThreadSwagger");
+const LikeSwagger = require("./LikeSwagger");
+const ReplySwagger = require("./ReplySwagger");
+const FollowSwagger = require("./FollowSwagger");
 
 const doc = {
   info: {
@@ -20,6 +23,9 @@ const doc = {
       ...LoginSwagger,
       ...UserSwagger,
       ...ThreadSwagger,
+      ...LikeSwagger,
+      ...ReplySwagger,
+      ...FollowSwagger,
     },
     securitySchemes: {
       bearerAuth: {
