@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import router from "./router";
 import swaggerUI from "swagger-ui-express";
 import swaggerDoc from "../swagger/swagger-output.json";
+import { initializedRedisClient, redisClient } from "./libs/redis";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(
     explorer: true,
     swaggerOptions: {
       persistAuthorization: true,
+      displayRequestDuration: true,
     },
   })
 );
@@ -29,6 +31,8 @@ app.get("/", (req, res) => {
   res.send("Hello, welcome to circle!");
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
+initializedRedisClient().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on port: ${port}`);
+  });
 });

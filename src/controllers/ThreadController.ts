@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import ThreadService from "../services/ThreadService";
 import { ThreadDTO } from "../types/ThreadDTO";
+import { redisClient } from "../libs/redis";
 
 class ThreadController {
   constructor(private readonly threadService: ThreadService) {}
@@ -8,6 +9,9 @@ class ThreadController {
   async find(req: Request, res: Response) {
     try {
       const threads = await this.threadService.find();
+      await redisClient.set("THREADS_DATA", JSON.stringify(threads), {
+        EX: 5,
+      });
       res.json({ threads });
     } catch (error) {
       console.error("Error retrieving threads:", error);
