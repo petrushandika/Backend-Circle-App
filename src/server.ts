@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import router from "./router";
 import swaggerUI from "swagger-ui-express";
 import swaggerDoc from "../swagger/swagger-output.json";
-import { initializedRedisClient, redisClient } from "./libs/redis";
+import { initializedRedisClient } from "./libs/redis";
 
 dotenv.config();
 

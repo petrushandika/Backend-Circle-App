@@ -34,7 +34,7 @@ const doc = {
             type: "string",
           },
         },
-        required: ["fullName", "username", "email", "password"],
+        required: ["fullName", "email", "password"],
       },
       LoginDTO: {
         type: "object",
