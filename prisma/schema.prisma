@@ -15,6 +15,7 @@ model user {
   password String
   avatar   String?
   bio      String?
+  verified Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -76,4 +77,19 @@ model follow {
   followAt    DateTime @default(now())
 
   @@unique([followersId, followingId])
+}
+
+model verification {
+  id Int @id @default(autoincrement())
+
+  token String           @unique
+  type  verificationType @default(EMAIL)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+enum verificationType {
+  EMAIL
+  FORGOT_PASSWORD
 }

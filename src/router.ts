@@ -7,6 +7,7 @@ import ThreadRoutes from "./routes/ThreadRoutes";
 import LikeRoutes from "./routes/LikeRoutes";
 import RepliesRoutes from "./routes/RepliesRoutes";
 import FollowRoutes from "./routes/FollowRoutes";
+import VerifyRoutes from "./routes/VerifyRoutes";
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use(ThreadRoutes);
 router.use(LikeRoutes);
 router.use(RepliesRoutes);
 router.use(FollowRoutes);
+router.use(VerifyRoutes);
 
 export default router;

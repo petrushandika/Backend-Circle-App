@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import RegisterService from "../services/RegisterService";
 import { RegisterDTO } from "../types/RegisterDTO";
+import { transporter } from "../libs/nodemailer";
+import jwt from "jsonwebtoken";
+import VerifyService from "../services/VerifyService";
 
 class RegisterController {
   constructor(private readonly registerService: RegisterService) {}
@@ -22,6 +25,24 @@ class RegisterController {
 
     try {
       const user = await this.registerService.register(dto);
+
+      // Membuat payload yang berisi ID user
+      const payload = { id: user.id };
+      const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+      const fullUrl = req.protocol + "://" + req.get("host");
+
+      const info = await transporter.sendMail({
+        from: "Circle <suryaelidanto@gmail.com>", // sender address
+        to: user.email, // list of receivers
+        subject: "Verification Link", // Subject line
+        html: `<a href="${fullUrl}/api/v/auth/verify-email?token=${token}">Klik untuk verifikasi email kamu!</a>`, // html body
+      });
+
+      console.log("Message sent: %s", info.messageId);
+
+      await new VerifyService().createVerification(token, "EMAIL");
+
       res.status(201).json(user);
     } catch (error: any) {
       console.error("Error registering:", error.message);
