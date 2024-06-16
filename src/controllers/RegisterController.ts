@@ -26,7 +26,6 @@ class RegisterController {
     try {
       const user = await this.registerService.register(dto);
 
-      // Membuat payload yang berisi ID user
       const payload = { id: user.id };
       const token = jwt.sign(payload, process.env.JWT_SECRET);
 
