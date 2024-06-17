@@ -53,7 +53,7 @@ class ThreadService {
 
   async create(dto: ThreadDTO) {
     try {
-      console.log("DTO before validation:", dto); 
+      console.log("DTO before validation:", dto);
       await ThreadSchema.validateAsync(dto);
       console.log("DTO after validation:", dto);
 
@@ -81,13 +81,14 @@ class ThreadService {
 
   async update(id: number, dto: ThreadDTO) {
     try {
-      await ThreadSchema.validateAsync(dto);
+      // await ThreadSchema.validateAsync(dto);
 
       const threadData = {
         ...dto,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
         totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
       };
+      delete threadData.userId;
 
       console.log("Updating thread with id:", id, "and data:", threadData);
       return await this.prisma.thread.update({

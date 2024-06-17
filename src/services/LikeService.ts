@@ -16,7 +16,6 @@ class LikeService {
   async create(dto: LikeDTO) {
     const validate = await LikeSchema.validateAsync(dto);
 
-    // Start a transaction
     const [like, thread] = await this.prisma.$transaction([
       this.prisma.like.create({ data: validate }),
       this.prisma.thread.update({

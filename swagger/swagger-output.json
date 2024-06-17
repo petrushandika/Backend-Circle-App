@@ -704,9 +704,46 @@
           }
         }
       }
+    },
+    "/api/v/auth/verify-email": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
+    "LikeDTO": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer"
+        },
+        "threadId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "userId",
+        "threadId"
+      ]
+    },
     "ReplyDTO": {
       "type": "object",
       "properties": {
@@ -740,39 +777,16 @@
     "FollowDTO": {
       "type": "object",
       "properties": {
-        "fullName": {
-          "type": "string"
+        "followersId": {
+          "type": "integer"
         },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "password": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string",
-          "format": "binary"
-        },
-        "bio": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date"
+        "followingId": {
+          "type": "integer"
         }
       },
       "required": [
-        "userId",
-        "threadId",
-        "content"
+        "followersId",
+        "followingId"
       ]
     },
     "securitySchemes": {
@@ -924,7 +938,13 @@
           "bio": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "fullName",
+          "username",
+          "email",
+          "password"
+        ]
       },
       "UpdateUserDTO": {
         "type": "object",

@@ -154,6 +154,7 @@ const doc = {
             type: "string",
           },
         },
+        required: ["fullName", "username", "email", "password"],
       },
       UpdateUserDTO: {
         type: "object",
@@ -266,6 +267,18 @@ const doc = {
         required: ["id"],
       },
     },
+    LikeDTO: {
+      type: "object",
+      properties: {
+        userId: {
+          type: "integer",
+        },
+        threadId: {
+          type: "integer",
+        },
+      },
+      required: ["userId", "threadId"],
+    },
     ReplyDTO: {
       type: "object",
       properties: {
@@ -295,36 +308,14 @@ const doc = {
     FollowDTO: {
       type: "object",
       properties: {
-        fullName: {
-          type: "string",
+        followersId: {
+          type: "integer",
         },
-        username: {
-          type: "string",
-        },
-        email: {
-          type: "string",
-          format: "email",
-        },
-        password: {
-          type: "string",
-        },
-        avatar: {
-          type: "string",
-          format: "binary",
-        },
-        bio: {
-          type: "string",
-        },
-        createdAt: {
-          type: "string",
-          format: "date",
-        },
-        updatedAt: {
-          type: "string",
-          format: "date",
+        followingId: {
+          type: "integer",
         },
       },
-      required: ["userId", "threadId", "content"],
+      required: ["followersId", "followingId"],
     },
     securitySchemes: {
       bearerAuth: {
