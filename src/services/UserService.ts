@@ -58,17 +58,9 @@ class UserService {
 
   async update(id: number, dto: UserDTO) {
     try {
-      const { error, value } = UserSchema.validate(dto);
-
-      if (error) {
-        throw new Error(
-          `Validation error: ${error.details.map((x) => x.message).join(", ")}`
-        );
-      }
-
       return await this.prisma.user.update({
-        where: { id },
-        data: value,
+        where: { id: +id },
+        data: dto,
       });
     } catch (error) {
       console.error("Error updating user:", error);

@@ -69,16 +69,24 @@ class UserController {
     */
     const { id } = req.params;
     const dto = req.body as UserDTO;
+
     try {
-      const updatedUser = await this.userService.update(Number(id), dto);
+      await this.userService.update(Number(id), dto);
+      const updatedUser = await this.userService.findOne(Number(id));
       if (!updatedUser) {
-        res.status(404).json({ error: "User not found" });
-      } else {
-        res.status(200).json(updatedUser);
+        res.status(404).json({ error: "User not found after update" });
+        return;
       }
+      res.status(200).json(updatedUser);
     } catch (error) {
       console.error("Error updating user:", error);
-      res.status(400).json({ error: "Error updating user" });
+      res
+        .status(500)
+        .send(
+          `Internal Server Error: ${
+            error instanceof Error ? error.message : ""
+          }`
+        );
     }
   }
 

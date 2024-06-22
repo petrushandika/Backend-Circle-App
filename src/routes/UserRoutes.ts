@@ -3,6 +3,7 @@ import { Router } from "express";
 import UserController from "../controllers/UserController";
 import UserService from "../services/UserService";
 import { authenticate } from "../middlewares/Authenticate";
+import upload from "../middlewares/UploadFile";
 
 const router: Router = express.Router();
 const userService = new UserService();
@@ -12,7 +13,7 @@ router.get("/users", authenticate, (req, res) => userController.find(req, res));
 router.get("/users/:id", authenticate, (req, res) =>
   userController.findOne(req, res)
 );
-router.patch("/users/:id", authenticate, (req, res) =>
+router.patch("/users/:id", authenticate, upload.single("image"), (req, res) =>
   userController.update(req, res)
 );
 router.delete("/users/:id", authenticate, (req, res) =>
