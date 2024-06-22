@@ -44,7 +44,17 @@ class ReplyController {
         }
       } 
     */
-    const dto = req.body as ReplyDTO;
+    const dto: ReplyDTO = {
+      content: req.body.content,
+      userId: res.locals.user ? res.locals.user.id : null,
+      threadId: req.body.threadId,
+      fullName: res.locals.user ? res.locals.user.fullName : "",
+      username: res.locals.user ? res.locals.user.username : "",
+    };
+
+    if (req.file) {
+      dto.image = req.file.path;
+    }
 
     try {
       const reply = await this.replyService.create(dto);
@@ -70,6 +80,10 @@ class ReplyController {
     */
     const { id } = req.params;
     const dto = req.body as ReplyDTO;
+
+    if (req.file) {
+      dto.image = req.file.path;
+    }
 
     try {
       const updatedReply = await this.replyService.update(Number(id), dto);

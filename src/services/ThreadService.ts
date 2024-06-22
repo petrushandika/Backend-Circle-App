@@ -53,9 +53,7 @@ class ThreadService {
 
   async create(dto: ThreadDTO) {
     try {
-      console.log("DTO before validation:", dto);
       await ThreadSchema.validateAsync(dto);
-      console.log("DTO after validation:", dto);
 
       let imageUrl = null;
       if (dto.image) {
@@ -81,8 +79,6 @@ class ThreadService {
 
   async update(id: number, dto: ThreadDTO) {
     try {
-      // await ThreadSchema.validateAsync(dto);
-
       const threadData = {
         ...dto,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
@@ -90,7 +86,6 @@ class ThreadService {
       };
       delete threadData.userId;
 
-      console.log("Updating thread with id:", id, "and data:", threadData);
       return await this.prisma.thread.update({
         where: { id },
         data: threadData,
