@@ -288,19 +288,15 @@ const doc = {
         threadId: {
           type: "integer",
         },
+        avatar: {
+          type: "string",
+          format: "binary",
+        },
         image: {
           type: "file",
         },
         content: {
           type: "string",
-        },
-        createdAt: {
-          type: "string",
-          format: "date",
-        },
-        updatedAt: {
-          type: "string",
-          format: "date",
         },
       },
       required: ["userId", "threadId", "content"],

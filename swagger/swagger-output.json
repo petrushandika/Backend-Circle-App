@@ -186,9 +186,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
           },
@@ -403,9 +400,28 @@
     "/api/v/likes": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "threadId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -432,54 +448,32 @@
             }
           }
         }
-      }
-    },
-    "/api/v/likes/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
       },
       "delete": {
         "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  },
+                  "threadId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -753,19 +747,15 @@
         "threadId": {
           "type": "integer"
         },
+        "avatar": {
+          "type": "string",
+          "format": "binary"
+        },
         "image": {
           "type": "file"
         },
         "content": {
           "type": "string"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date"
         }
       },
       "required": [
