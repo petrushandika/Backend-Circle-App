@@ -9,42 +9,48 @@ class LikeService {
     return this.prisma.like.findMany();
   }
 
-  async findOne(id: number) {
-    return this.prisma.like.findFirst({ where: { id } });
+  // async findOne(id: number) {
+  //   return this.prisma.like.findFirst({ where: { id } });
+  // }
+
+  async findOne(userId: number, threadId: number) {
+    return this.prisma.like.findFirst({ where: { userId, threadId } });
   }
 
   async create(dto: LikeDTO) {
     const validate = await LikeSchema.validateAsync(dto);
 
-    const [like, thread] = await this.prisma.$transaction([
+    console.log(validate);
+    const [like] = await this.prisma.$transaction([
       this.prisma.like.create({ data: validate }),
       this.prisma.thread.update({
         where: { id: validate.threadId },
         data: {
-          totalLikes: { increment: 1 }
-        }
-      })
+          totalLikes: { increment: 1 },
+        },
+      }),
     ]);
 
     return like;
   }
 
-  async delete(id: number) {
-    const like = await this.prisma.like.findUnique({ where: { id } });
+  async delete(userId: number, threadId: number) {
+    const like = await this.prisma.like.findFirst({
+      where: { userId, threadId },
+    });
 
     if (!like) {
       throw new Error("Like not found");
     }
 
-    // Start a transaction
     await this.prisma.$transaction([
-      this.prisma.like.delete({ where: { id } }),
+      this.prisma.like.delete({ where: { id: like.id } }),
       this.prisma.thread.update({
         where: { id: like.threadId },
         data: {
-          totalLikes: { decrement: 1 }
-        }
-      })
+          totalLikes: { decrement: 1 },
+        },
+      }),
     ]);
 
     return like;

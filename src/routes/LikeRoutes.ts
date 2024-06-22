@@ -7,9 +7,9 @@ const router: Router = express.Router();
 const likeService = new LikeService();
 const likeController = new LikeController(likeService);
 
-router.get("/likes", (req, res) => likeController.find(req, res));
-router.get("/likes/:id", (req, res) => likeController.findOne(req, res));
+router.get("/likes", (req, res) => likeController.findOne(req, res));
 router.post("/likes", (req, res) => likeController.create(req, res));
-router.delete("/likes/:id", (req, res) => likeController.delete(req, res));
+router.delete("/likes", (req, res) => likeController.delete(req, res));
+
 
 export default router;
