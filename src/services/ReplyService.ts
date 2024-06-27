@@ -34,7 +34,12 @@ class ReplyService {
 
   async findOne(id: number) {
     try {
-      return await this.prisma.reply.findFirst({ where: { id } });
+      return await this.prisma.reply.findMany({
+        where: { id },
+        include: {
+          user: true,
+        },
+      });
     } catch (error) {
       throw new Error("Error retrieving reply");
     }

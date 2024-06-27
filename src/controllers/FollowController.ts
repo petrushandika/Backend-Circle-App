@@ -45,7 +45,7 @@ class FollowController {
 
     try {
       await this.followService.deleteFollower(followingId, followersId);
-      res.status(500).send("Follower deleted successfully");
+      res.status(201).send("Follower deleted successfully");
     } catch (error) {
       console.error("Error deleting follower:", error);
       res.status(500).send("Internal Server Error");

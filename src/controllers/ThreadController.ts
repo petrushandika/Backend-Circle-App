@@ -56,7 +56,7 @@ class ThreadController {
     if (req.file) {
       dto.image = req.file.path;
     }
-
+    
     try {
       await redisClient.del("THREADS_DATA");
       const thread = await this.threadService.create(dto);
@@ -90,6 +90,10 @@ class ThreadController {
     const dto = req.body as ThreadDTO;
 
     try {
+      if (req.file) {
+        dto.image = req.file.path
+      }
+
       await this.threadService.update(Number(id), dto);
       const updatedThread = await this.threadService.findOne(Number(id));
       if (!updatedThread) {

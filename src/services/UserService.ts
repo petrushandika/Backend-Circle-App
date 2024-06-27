@@ -1,9 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import { UserDTO } from "../types/UserDTO";
 import { UserSchema } from "../validators/UserValidator";
+import { v2 as cloudinary } from "cloudinary";
 
 class UserService {
   private readonly prisma = new PrismaClient();
+
+  constructor() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+  }
 
   async find(search: string) {
     try {
@@ -58,9 +67,27 @@ class UserService {
 
   async update(id: number, dto: UserDTO) {
     try {
+      console.log(dto.avatar);
+      await UserSchema.validateAsync(dto);
+
+      let imageUrl = dto.avatar || null;
+      if (dto.avatar) {
+        const uploadResult = await cloudinary.uploader.upload(dto.avatar, {
+          upload_preset: "CircleApp",
+        });
+        imageUrl = uploadResult.secure_url;
+      }
+
+      const userData = {
+        ...dto,
+        avatar: imageUrl,
+      };
+
+      console.log("Updating user with data:", userData);
+
       return await this.prisma.user.update({
         where: { id: +id },
-        data: dto,
+        data: userData,
       });
     } catch (error) {
       console.error("Error updating user:", error);

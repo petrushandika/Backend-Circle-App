@@ -71,6 +71,10 @@ class UserController {
     const dto = req.body as UserDTO;
 
     try {
+      if (req.file) {
+        dto.avatar = req.file.path
+      }
+
       await this.userService.update(Number(id), dto);
       const updatedUser = await this.userService.findOne(Number(id));
       if (!updatedUser) {
