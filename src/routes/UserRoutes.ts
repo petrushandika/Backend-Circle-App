@@ -13,7 +13,7 @@ router.get("/users", authenticate, (req, res) => userController.find(req, res));
 router.get("/users/:id", authenticate, (req, res) =>
   userController.findOne(req, res)
 );
-router.patch("/users/:id", authenticate, upload.single("image"), (req, res) =>
+router.patch("/users/:id", authenticate, upload.single("avatar"), (req, res) =>
   userController.update(req, res)
 );
 router.delete("/users/:id", authenticate, (req, res) =>

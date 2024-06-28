@@ -6,7 +6,7 @@ import CheckController from "../controllers/CheckController";
 const router: Router = express.Router();
 const checkController = new CheckController();
 
-router.post("/auth/check", authenticate, (req, res) =>
+router.get("/auth/check", authenticate, (req, res) =>
   checkController.check(req, res)
 );
 

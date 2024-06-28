@@ -79,13 +79,26 @@ class ThreadService {
 
   async update(id: number, dto: ThreadDTO) {
     try {
+      console.log(dto.image);
+      await ThreadSchema.validateAsync(dto);
+
+      let imageUrl = dto.image || null;
+      if (dto.image) {
+        const uploadResult = await cloudinary.uploader.upload(dto.image, {
+          upload_preset: "CircleApp",
+        });
+        imageUrl = uploadResult.secure_url;
+      }
+
       const threadData = {
         ...dto,
+        image: imageUrl,
         totalLikes: dto.totalLikes ? Number(dto.totalLikes) : 0,
         totalReplies: dto.totalReplies ? Number(dto.totalReplies) : 0,
       };
       delete threadData.userId;
 
+      console.log("Updating thread with data:", threadData);
       return await this.prisma.thread.update({
         where: { id },
         data: threadData,
