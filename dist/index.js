@@ -48,7 +48,7 @@ AppV1.get('/', swagger_ui_express_1.default.setup(swagger_json_1.default, {
 }));
 async function main() {
     AppV1.use((0, express_rate_limit_1.rateLimit)({
-        windowMs: 15 * 60 * 1000,
+        windowMs: 15 * 60 * 1000, // reset every 15 mins
         limit: 499,
         standardHeaders: 'draft-7',
         legacyHeaders: false,
