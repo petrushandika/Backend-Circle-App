@@ -1,30 +1,24 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express'
+import { SECRET_SAUCE } from '../configs/config'
+import jwt from 'jsonwebtoken'
 
-export function authenticate(req: Request, res: Response, next: NextFunction) {
-  /* 
-  #swagger.security = [{
-            "bearerAuth": []
-    }] 
-  */
-  const authorizationHeader = req.headers.authorization;
+function authenticate(req: Request, res: Response, next: NextFunction) {
+    const headers = req.headers.authorization
 
-  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Unauthorized!" });
-  }
+    if (!headers || !headers.startsWith('Bearer')) {
+        return res.sendStatus(401)
+    }
 
-  const token = authorizationHeader.split(" ")[1];
-  const jwtSecret = process.env.JWT_SECRET;
+    const token = headers && headers.split(' ')[1]
 
-  if (!jwtSecret) {
-    return res.status(500).json({ error: "JWT secret not configured!" });
-  }
+    jwt.verify(token, SECRET_SAUCE, (error, user) => {
+        if (error) {
+            return res.sendStatus(401)
+        }
 
-  try {
-    const user = jwt.verify(token, jwtSecret);
-    res.locals.user = user;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Unauthorized!" });
-  }
+        res.locals.user = user
+        next()
+    })
 }
+
+export default authenticate

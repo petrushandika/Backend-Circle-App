@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<BusinessInfoDesign class="oracle.dbtools.crest.model.businessinfo.BusinessInfoDesign" name="Business Information" id="4016ECD2-FFF4-E7DF-F0A3-49EE5A75F0D8">
-<createdBy>petru</createdBy>
-<createdTime>2024-05-30 08:17:03 UTC</createdTime>
-<ownerDesignName>CircleApp</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</BusinessInfoDesign>

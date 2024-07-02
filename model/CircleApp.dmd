@@ -1,8 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="CircleApp" id="D1F6C9A6-A96E-FA41-A1C2-6AB20E357CCE" version="3.5">
-<createdBy>petru</createdBy>
-<createdTime>2024-05-30 08:17:03 UTC</createdTime>
-<ownerDesignName>CircleApp</ownerDesignName>
-<capitalNames>false</capitalNames>
-<designId>D1F6C9A6-A96E-FA41-A1C2-6AB20E357CCE</designId>
-</OSDM_Design>

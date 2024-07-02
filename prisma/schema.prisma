@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -7,89 +8,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id       Int     @id @default(autoincrement())
-  fullName String
-  username String  @unique
-  email    String  @unique
-  password String
-  avatar   String?
-  bio      String?
-  verified Boolean @default(false)
+model User {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  email         String    @unique
+  name          String
+  password      String
+  avatar        String?
+  banner        String?
+  bio           String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  filterContent Boolean   @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  vibes         Vibe[]    @relation("UserVibes")
+  replies       Reply[]   @relation("UserReplies")
+  likes         Like[]    @relation("UserLikes")
+  followings    Follow[]  @relation("UserFollowing")
+  followers     Follow[]  @relation("UserFollowers")
 
-  threads   thread[]
-  replies   reply[]
-  followers follow[] @relation("userFollowing")
-  following follow[] @relation("userFollowers")
-  likes     like[]
+  @@map("users")
 }
 
-model thread {
-  id           Int      @id @default(autoincrement())
-  image        String?
-  content      String
-  totalLikes   Int      @default(0)
-  totalReplies Int      @default(0)
-  userId       Int
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+model Vibe {
+  id            Int       @id @default(autoincrement())
+  content       String
+  image         String?
+  badLabels     String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  user    user    @relation(fields: [userId], references: [id])
-  replies reply[]
-  likes   like[]
+  author        User      @relation(fields: [authorId], references: [id], name: "UserVibes",  onDelete: Cascade)
+  authorId      Int
+
+  replies       Reply[]   @relation("VibeReplies")
+  likes         Like[]    @relation("VibeLikes")
+
+  @@map("vibes")
 }
 
-model like {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  threadId  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+model Reply {
+  id          Int       @id @default(autoincrement())
+  image       String?
+  content     String
+  badLabels   String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  user   user   @relation(fields: [userId], references: [id])
-  thread thread @relation(fields: [threadId], references: [id])
+  repliedBy   User      @relation(fields: [authorId], references: [id], name: "UserReplies", onDelete: Cascade)
+  authorId    Int
+  repliedTo   Vibe      @relation(fields: [targetId], references: [id], name: "VibeReplies", onDelete: Cascade)
+  targetId    Int
 
-  @@unique([userId, threadId])
+  @@map("replies")
 }
 
-model reply {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  threadId  Int
-  image     String?
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+model Like {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  user   user   @relation(fields: [userId], references: [id])
-  thread thread @relation(fields: [threadId], references: [id])
+  likedBy     User      @relation(fields: [authorId], references: [id], name: "UserLikes", onDelete: Cascade)
+  authorId    Int
+  likedOn     Vibe      @relation(fields: [targetId], references: [id], name: "VibeLikes", onDelete: Cascade)
+  targetId    Int
+
+  @@map("likes")
 }
 
-model follow {
-  id          Int      @id @default(autoincrement())
-  follower    user     @relation("userFollowing", fields: [followersId], references: [id])
-  following   user     @relation("userFollowers", fields: [followingId], references: [id])
-  followersId Int
-  followingId Int
-  followAt    DateTime @default(now())
+model Follow {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  @@unique([followersId, followingId])
-}
+  following     User      @relation(fields: [targetId], references: [id], name: "UserFollowers", onDelete: Cascade)
+  targetId      Int
+  followOwner   User      @relation(fields: [ownerId], references: [id], name: "UserFollowing", onDelete: Cascade)
+  ownerId       Int
 
-model verification {
-  id Int @id @default(autoincrement())
-
-  token String           @unique
-  type  verificationType @default(EMAIL)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-}
-
-enum verificationType {
-  EMAIL
-  FORGOT_PASSWORD
+  @@map("follows")
 }

@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="5FDB9FD6-F030-C0A5-48BC-4819B1CD1BE5" mainViewID="59710162-ED77-38D8-7442-7159FDFFA9C2">
-<createdBy>petru</createdBy>
-<createdTime>2024-05-30 08:17:03 UTC</createdTime>
-<ownerDesignName>CircleApp</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</LogicalDesign>
