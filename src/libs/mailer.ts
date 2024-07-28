@@ -34,7 +34,7 @@ export async function sendMail(payload: sendMailParams) {
 
     try {
         await transporter.sendMail({
-            from: '"Circle App" <petrushandikasinaga@gmail.com>',
+            from: '"Circle App" <mail.ardix@gmail.com>',
             to: `${payload.to}`,
             subject: `${payload.subject}`,
             html: mustache.render(template, { payload }),
